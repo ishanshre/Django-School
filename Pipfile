@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 django = "*"
 python-dotenv = "*"
+pillow = "*"
+django-phonenumbers = "*"
+django-phonenumber-field = "*"
 
 [dev-packages]
 
