@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm, AuthenticationForm
 from django.contrib.auth import get_user_model
 
 from django import forms
@@ -40,3 +40,12 @@ class CustomUserChangeForm(UserChangeForm):
         if len(data) < 5:
             raise forms.ValidationError('Lenght of username must be greater than 4 digits')
         return data
+
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(max_length=255)
+    password = forms.CharField(max_length=255, widget=forms.PasswordInput)
+    remember_me = forms.BooleanField(required=False)
+
+    class Meta:
+        model = User
+        fields = ['username','password','remember_me']
