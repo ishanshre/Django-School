@@ -41,9 +41,18 @@ class CustomUserChangeForm(UserChangeForm):
             raise forms.ValidationError('Lenght of username must be greater than 4 digits')
         return data
 
+
+INPUT_CLASS = 'w-full my-4 py-4 px-6 rounded-xl bg-gray-100'
+
 class LoginForm(AuthenticationForm):
-    username = forms.CharField(max_length=255)
-    password = forms.CharField(max_length=255, widget=forms.PasswordInput)
+    username = forms.CharField(max_length=255, widget=forms.TextInput(attrs={
+        "placeholder": "Your Username",
+        "class": INPUT_CLASS
+    }))
+    password = forms.CharField(max_length=255, widget=forms.PasswordInput(attrs={
+        "placeholder": "Your Password",
+        "class": INPUT_CLASS
+    }))
     remember_me = forms.BooleanField(required=False)
 
     class Meta:
