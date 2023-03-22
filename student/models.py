@@ -36,7 +36,7 @@ class Student(Person):
     work_status = models.CharField(null=True, blank=True, max_length=255)
     disablity = models.BooleanField(default=False)
     disablity_description = models.CharField(max_length=255, null=True, blank=True)
-    enrolled_date = models.DateTimeField(null=True, blank=True)
+    enrolled_date = models.DateField(null=True, blank=True)
 
     
 
