@@ -1,0 +1,29 @@
+{% extends "base/base.html" %}
+{% block title %}Student List{% endblock %}
+
+{% block body %}
+<div class="p-4 sm:ml-64">
+    <h1 class="text-2xl">{{student.first_name|title}} {{student.last_name|title}}</h1>    
+    {% if student.picture %}
+    <img src="{{student.picture.url}}" alt="avatar">
+    {% endif %}
+    <p><strong>First Name :</strong>{{student.first_name}}</p>
+    <p><strong>Middle Name :</strong>{{student.middle_name}}</p>
+    <p><strong>Last Name :</strong>{{student.last_name}}</p>
+    <p><strong>Registration ID :</strong>{{student.registration_id}}</p>
+    <p><strong>Date of Birth :</strong>{{student.date_of_birth}}</p>
+    <p><strong>Gender :</strong>{{student.gender}}</p>
+    <p><strong>Email :</strong>{{student.email}}</p>
+    <p><strong>Temporary Address :</strong>{{student.temporary_address}}</p>
+    <p><strong>Permanent Address :</strong>{{student.permanent_address}}</p>
+    <p><strong>Father's Name :</strong>{{student.fathers_name}}</p>
+    <p><strong>Mother's Name :</strong>{{student.mothers_name}}</p>
+    <p><strong>Work Status :</strong>{{student.work_status}}</p>
+    <p><strong>Disability :</strong>{{student.disability}}</p>
+    <p><strong>Disability Desciption :</strong>{{student.disablity_description}}</p>
+    <p><strong>Enrolled Date :</strong>{{student.enrolled_date}}</p>
+    <p><strong>Created Date :</strong>{{student.created_date}}</p>
+    <p><strong>Modified Date :</strong>{{student.modified_date}}</p>
+</div>
+
+{% endblock %}

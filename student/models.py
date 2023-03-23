@@ -1,5 +1,7 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+
+from django.urls import reverse
 # Create your models here.
 
 class Gender(models.TextChoices):
@@ -37,6 +39,9 @@ class Student(Person):
     disablity = models.BooleanField(default=False)
     disablity_description = models.CharField(max_length=255, null=True, blank=True)
     enrolled_date = models.DateField(null=True, blank=True)
+
+    def get_absolute_url(self):
+        return reverse("student:student-detail", args=[self.id])
 
     
 

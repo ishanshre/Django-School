@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from django.urls import reverse_lazy
 
@@ -20,23 +20,36 @@ class StudentManageView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         students = Student.objects.all().order_by("-created_date")
         student_create = StudentCreateForm()
+        
         context = {
             "students":students,
             "student_create":student_create,
+            
         }
         return render(request, self.template_name, context)
     def post(self, request, *args, **kwargs):
         students = Student.objects.all().order_by("-created_date")
         student_create = StudentCreateForm()
+        
         if "create" in request.POST:
             student_create = StudentCreateForm(request.POST, request.FILES)
             if student_create.is_valid():
                 student_create.save()
                 messages.success(request, 'Student Added Successfully')
                 return redirect("dashboard:dashboard")
-                
         context = {
             "students":students,
             "student_create":student_create,
+        }
+        return render(request, self.template_name, context)
+
+
+class StudentDetailView(LoginRequiredMixin, View):
+    template_name = "student/student_detail.html"
+    def get(self, request, *args, **kwargs):
+        student_id = self.kwargs['pk']
+        student = get_object_or_404(Student, id=student_id)
+        context = {
+            "student":student
         }
         return render(request, self.template_name, context)
