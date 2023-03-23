@@ -1,5 +1,5 @@
 {% extends "base/base.html" %}
-{% block title %}Ishan School{% endblock %}
+{% block title %}Dashboard: Ishan School{% endblock %}
 
 {% block body %}
 <div class="p-4 sm:ml-64">
@@ -36,8 +36,9 @@
                 </tr>
             </thead>
             <tbody>
+                {% for student in students %}
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    {% for student in students %}
+                    
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {{forloop.counter}}
                     </th>
@@ -62,11 +63,12 @@
                     <td class="px-6 py-4">
                         <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                     </td>
-                    {% endfor %}
+                
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
-        <a href="#" class="">View All >></a>
+        <a href="{% url 'student:student-manage' %}" class="">View All >></a>
     </div>
 </div>
 {% endblock %}

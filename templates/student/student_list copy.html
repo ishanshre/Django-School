@@ -32,7 +32,101 @@
                     
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{student_create}}
+                        {% if student_create.errors %}
+                        {% for field in student_create %}
+                            {% for error in field.errors %}
+                                <p> {{ error }} </p>
+                            {% endfor %}
+                        {% endfor %}
+                        {% endif %}
+                    <div class="flex flex-row justify-between space-x-2">
+                        <div class="mb-6">
+                            {{student_create.picture.label_tag}}<br>
+                            {{student_create.picture.errors}}
+                            {{student_create.picture}}
+                        </div>
+                        <div class="mb-6">
+                            {{student_create.date_of_birth.label_tag}} <br>
+                            {{student_create.date_of_birth.errors}}
+                            {{student_create.date_of_birth}}
+                        </div>
+                        <div class="mb-6">
+                            {{student_create.enrolled_date.errors}}
+                            {{student_create.enrolled_date.label_tag}} <br>
+                            {{student_create.enrolled_date}}
+                        </div>
+                        <div class="mb-6">
+                            {{student_create.gender.errors}}
+                            {{student_create.gender.label_tag}} <br>
+                            {{student_create.gender}}
+                        </div>
+                    </div>
+                    <div class="flex flex-row justify-between space-x-2">
+                        <div class="mb-6">
+                            {{student_create.first_name.label_tag}} <br>
+                            {{student_create.first_name.errors}}
+                            {{student_create.first_name}}
+                        </div>
+                        <div class="mb-6">
+                            {{student_create.middle_name.label_tag}}
+                            {{student_create.middle_name.errors}}
+                            {{student_create.middle_name}}
+                        </div>
+                        <div class="mb-6">
+                            {{student_create.last_name.label_tag}}
+                            {{student_create.last_name.errors}}
+                            {{student_create.last_name}}
+                        </div>
+                        <div class="mb-6">
+                            {{student_create.registration_id.label_tag}}
+                            {{student_create.registration_id.errors}}
+                            {{student_create.registration_id}}
+                        </div>   
+                    </div>
+                    <div class="mb-6">
+                        {{student_create.email.label_tag}}
+                        {{student_create.email.errors}}
+                        {{student_create.email}}
+                    </div>
+                    <div class="flex space-x-2 justify-between">
+                        <div class="mb-6">
+                            {{student_create.temporary_address.label_tag}}
+                            {{student_create.temporary_address.errors}}
+                            {{student_create.temporary_address}}
+                        </div>
+                        <div class="mb-6">
+                            {{student_create.permanent_address.label_tag}}
+                            {{student_create.permanent_address.errors}}
+                            {{student_create.permanent_address}}
+                        </div>
+                        <div class="mb-6">
+                            {{student_create.fathers_name.label_tag}}
+                            {{student_create.fathers_name.errors}}
+                            {{student_create.fathers_name}}
+                        </div>
+                        <div class="mb-6">
+                            {{student_create.mothers_name.label_tag}}
+                            {{student_create.mothers_name.errors}}
+                            {{student_create.mothers_name}}
+                        </div>
+                    </div>
+                    <div class="flex space-x-2 justify-between">
+                        <div class="mb-6">
+                            {{student_create.work_status.label_tag}}
+                            {{student_create.work_status.errors}}
+                            {{student_create.work_status}}
+                        </div>
+                        <div class="mb-6">
+                            {{student_create.disablity.label_tag}}
+                            {{student_create.disablity.errors}}
+                            {{student_create.disablity}}
+                        </div>
+                        <div class="mb-6">
+                            {{student_create.disablity_description.label_tag}}
+                            {{student_create.disablity_description.errors}}
+                            {{student_create.disablity_description}}
+                        </div>
+                    </div>
                     <input type="submit" value="Add" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600">
                 </form>
   
