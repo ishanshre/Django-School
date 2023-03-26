@@ -12,7 +12,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from student.models import Student
-from student.form import StudentCreateForm
+from student.form import StudentCreateForm, StudentUpdateForm, StudentDeleteForm
 # Create your views here.
 
 class StudentManageView(LoginRequiredMixin, View):
@@ -49,7 +49,37 @@ class StudentDetailView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         student_id = self.kwargs['pk']
         student = get_object_or_404(Student, id=student_id)
+        student_update = StudentUpdateForm(instance=student)
+        student_delete = StudentDeleteForm()
         context = {
-            "student":student
+            "student":student,
+            "student_update": student_update,
+            "student_delete": student_delete,
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        student_id = self.kwargs['pk']
+        student = get_object_or_404(Student, id=student_id)
+        student_update = StudentUpdateForm(instance=student)
+        student_delete = StudentDeleteForm()
+        if 'update' in request.POST:
+            student_update = StudentUpdateForm(request.POST, request.FILES, instance=student)
+            if student_update.is_valid():
+                student_update.save()
+                messages.success(request, 'Student Updated')
+                return redirect("student:student-detail", pk=student_id)
+        if 'delete' in request.POST:
+            student_delete = StudentDeleteForm(request.POST)
+            print("delete jot")
+            if student_delete.is_valid():
+                print('detele hit')
+                student.delete()
+                messages.success(request, 'Student Deleted')
+                return redirect("student:student-manage")
+        context = {
+            "student":student,
+            "student_update": student_update,
+            "student_delete": student_delete,
         }
         return render(request, self.template_name, context)

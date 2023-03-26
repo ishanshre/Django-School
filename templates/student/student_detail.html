@@ -3,7 +3,14 @@
 
 {% block body %}
 <div class="p-4 sm:ml-64">
-    <h1 class="text-2xl">{{student.first_name|title}} {{student.last_name|title}}</h1>    
+    <div class="flex flex-row justify-between mt-5 mb-5">
+        <div><h1 class="text-2xl">{{student.first_name|title}} {{student.last_name|title}}</h1></div>
+        <div class="flex space-x-2">
+            <button data-modal-target="student-update-modal" data-modal-toggle="student-update-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Update</button>
+            <button data-modal-target="student-delete-modal" data-modal-toggle="student-delete-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Delete</button>
+        </div>
+    </div>
+        
     {% if student.picture %}
     <img src="{{student.picture.url}}" alt="avatar">
     {% endif %}
@@ -25,5 +32,77 @@
     <p><strong>Created Date :</strong>{{student.created_date}}</p>
     <p><strong>Modified Date :</strong>{{student.modified_date}}</p>
 </div>
+
+    <!-- Student Delete modal -->
+    <div id="student-update-modal" aria-hidden="true" class="hidden overflow-x-hidden overflow-y-auto fixed h-modal md:h-full top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center">
+        <div class="relative w-full max-w-5xl px-4 h-full mt-4">
+            <!-- Modal content -->
+            <div class="bg-white rounded-lg shadow relative border-gray-600 border-2 dark:bg-gray-700 ">
+                <!-- Modal header -->
+                <div class="flex items-start justify-between p-5 border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-gray-900 text-xl lg:text-2xl font-semibold dark:text-white">
+                        Update Student
+                    </h3>
+                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="student-update-modal">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <div class="p-6 space-y-6 space-x-6">
+                    
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{student_update}}
+                    <input type="submit" value="Update" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600">
+                </form>
+  
+                </div>
+                <!-- Modal footer -->
+                <div class="flex space-x-2 items-center p-6 border-t border-gray-200 rounded-b dark:border-gray-600">
+                    <button data-modal-toggle="student-update-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600">Decline</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student updatereate modal ends-->
+
+
+    <!-- Student Delete modal starts-->
+
+
+        <!-- Main modal -->
+        <div id="student-delete-modal" aria-hidden="true" class="hidden overflow-x-hidden overflow-y-auto fixed h-modal md:h-full top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center">
+            <div class="relative w-full max-w-5xl px-4 h-full mt-4">
+                <!-- Modal content -->
+                <div class="bg-white rounded-lg shadow relative border-gray-600 border-2 dark:bg-gray-700 ">
+                    <!-- Modal header -->
+                    <div class="flex items-start justify-between p-5 border-b rounded-t dark:border-gray-600">
+                        <h3 class="text-gray-900 text-xl lg:text-2xl font-semibold dark:text-white">
+                            Delete Student {{student.first_name}} {{student.last_name}}
+                        </h3>
+                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="student-delete-modal">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="p-6 space-y-6 space-x-6">
+                        
+                    <form method="post">
+                        {% csrf_token %}
+                        {{student_delete}}<br>
+                        <input type="submit" value="Delete" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600">
+                    </form>
+      
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="flex space-x-2 items-center p-6 border-t border-gray-200 rounded-b dark:border-gray-600">
+                        <button data-modal-toggle="student-delete-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600">Decline</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Student create modal ends-->
 
 {% endblock %}
