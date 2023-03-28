@@ -9,6 +9,7 @@ python-dotenv = "*"
 pillow = "*"
 django-phonenumbers = "*"
 django-phonenumber-field = "*"
+babel = "*"
 
 [dev-packages]
 

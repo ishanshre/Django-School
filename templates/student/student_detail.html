@@ -3,34 +3,73 @@
 
 {% block body %}
 <div class="p-4 sm:ml-64">
-    <div class="flex flex-row justify-between mt-5 mb-5">
-        <div><h1 class="text-2xl">{{student.first_name|title}} {{student.last_name|title}}</h1></div>
-        <div class="flex space-x-2">
-            <button data-modal-target="student-update-modal" data-modal-toggle="student-update-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Update</button>
-            <button data-modal-target="student-delete-modal" data-modal-toggle="student-delete-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Delete</button>
+    <div class="bg-gray-200 rounded-xl p-4">
+        <div class="flex flex-row justify-between mt-5 mb-5">
+            <div><h1 class="text-2xl">{{student.first_name|title}} {{student.last_name|title}}</h1></div>
+            <div class="flex space-x-2">
+                <button data-modal-target="guarding-add-modal" data-modal-toggle="guarding-add-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Add Guardian</button>
+                <button data-modal-target="student-contact-add-modal" data-modal-toggle="student-contact-add-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Add Phone Number</button>
+                <button data-modal-target="student-update-modal" data-modal-toggle="student-update-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Update</button>
+                <button data-modal-target="student-delete-modal" data-modal-toggle="student-delete-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Delete</button>
+            </div>
         </div>
+            
+        {% if student.picture %}
+        <img src="{{student.picture.url}}" alt="avatar">
+        {% endif %}
+        <p><strong>First Name :</strong>{{student.first_name}}</p>
+        <p><strong>Middle Name :</strong>{{student.middle_name}}</p>
+        <p><strong>Last Name :</strong>{{student.last_name}}</p>
+        <p><strong>Registration ID :</strong>{{student.registration_id}}</p>
+        <p><strong>Date of Birth :</strong>{{student.date_of_birth}}</p>
+        <p><strong>Gender :</strong>{{student.get_gender_display}}</p>
+        <p><strong>Email :</strong>{{student.email}}</p>
+        <p><strong>Temporary Address :</strong>{{student.temporary_address}}</p>
+        <p><strong>Permanent Address :</strong>{{student.permanent_address}}</p>
+        <p><strong>Father's Name :</strong>{{student.fathers_name}}</p>
+        <p><strong>Mother's Name :</strong>{{student.mothers_name}}</p>
+        <p><strong>Work Status :</strong>{{student.work_status}}</p>
+        <p><strong>Disability :</strong>{{student.disablity}}</p>
+        <p><strong>Disability Desciption :</strong>{{student.disablity_description}}</p>
+        <p><strong>Contact Info :</strong></p>
+        <ul>
+            {% for phone in student.phones.all %}
+                <li>{{phone.phone}}</li>
+            {% endfor %}
+        </ul>
+        <p><strong>Enrolled Date :</strong>{{student.enrolled_date}}</p>
+        <p><strong>Created Date :</strong>{{student.created_date}}</p>
+        <p><strong>Modified Date :</strong>{{student.modified_date}}</p><br><hr>
     </div>
+
+
+    {% for guardian in student.guardians.all %}
         
-    {% if student.picture %}
-    <img src="{{student.picture.url}}" alt="avatar">
-    {% endif %}
-    <p><strong>First Name :</strong>{{student.first_name}}</p>
-    <p><strong>Middle Name :</strong>{{student.middle_name}}</p>
-    <p><strong>Last Name :</strong>{{student.last_name}}</p>
-    <p><strong>Registration ID :</strong>{{student.registration_id}}</p>
-    <p><strong>Date of Birth :</strong>{{student.date_of_birth}}</p>
-    <p><strong>Gender :</strong>{{student.gender}}</p>
-    <p><strong>Email :</strong>{{student.email}}</p>
-    <p><strong>Temporary Address :</strong>{{student.temporary_address}}</p>
-    <p><strong>Permanent Address :</strong>{{student.permanent_address}}</p>
-    <p><strong>Father's Name :</strong>{{student.fathers_name}}</p>
-    <p><strong>Mother's Name :</strong>{{student.mothers_name}}</p>
-    <p><strong>Work Status :</strong>{{student.work_status}}</p>
-    <p><strong>Disability :</strong>{{student.disability}}</p>
-    <p><strong>Disability Desciption :</strong>{{student.disablity_description}}</p>
-    <p><strong>Enrolled Date :</strong>{{student.enrolled_date}}</p>
-    <p><strong>Created Date :</strong>{{student.created_date}}</p>
-    <p><strong>Modified Date :</strong>{{student.modified_date}}</p>
+        <div class="bg-gray-200 p-4 rounded-xl mt-5">
+            <h1 class="text-2xl">Gurdians {{forloop.counter}}</h1>
+            {% if guardian.picture %}
+            <img src="{{guardian.picture}}" alt="guardian pic">
+            {% endif %}
+            <p><strong>First Name: </strong>{{guardian.first_name}}</p>
+            {% if guardian.middle_name %}
+            <p><strong>Middle Name: </strong>{{ guardian.middle_name }}</p>
+            {% endif %}
+            <p><strong>Last Name: </strong>{{ guardian.last_name }}</p>
+            <p><strong>Date of Birth: </strong>{{ guardian.date_of_birth }}</p>
+            <p><strong>Gender: </strong>{{ guardian.get_gender_display }}</p>
+            <p><strong>Email: </strong>{{ guardian.email }}</p>
+            <p><strong>Temporary Address: </strong>{{guardian.temporary_address}}</p>
+            <p><strong>Permanent Address: </strong>{{guardian.permanent_address}}</p>
+            <p><strong>Phone: </strong>{{guardian.phone}}</p>
+            <p><strong>Relationship: </strong>{{guardian.relationship}}</p>
+            <p><strong>Created At: </strong>{{guardian.created_date}}</p>
+            <p><strong>Modified At: </strong>{{guardian.modified_date}}</p>
+            {% if guardian.identity %}
+            <p><strong>Identity: </strong></p>
+            <img src="{{guardian.identity}}" alt="guardian identity">
+            {% endif %}
+        </div>
+    {% endfor %}
 </div>
 
     <!-- Student Delete modal -->
@@ -104,5 +143,81 @@
         </div>
     
         <!-- Student create modal ends-->
+
+
+        <!-- Student contact add modal starts-->
+
+
+        <!-- Main modal -->
+        <div id="student-contact-add-modal" aria-hidden="true" class="hidden overflow-x-hidden overflow-y-auto fixed h-modal md:h-full top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center">
+            <div class="relative w-full max-w-5xl px-4 h-full mt-4">
+                <!-- Modal content -->
+                <div class="bg-white rounded-lg shadow relative border-gray-600 border-2 dark:bg-gray-700 ">
+                    <!-- Modal header -->
+                    <div class="flex items-start justify-between p-5 border-b rounded-t dark:border-gray-600">
+                        <h3 class="text-gray-900 text-xl lg:text-2xl font-semibold dark:text-white">
+                            Add Guardian
+                        </h3>
+                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="student-contact-add-modal">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="p-6 space-y-6 space-x-6">
+                        
+                    <form method="post">
+                        {% csrf_token %}
+                        {{student_contact_add}}<br>
+                        <input type="submit" value="Add Student Contact" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600">
+                    </form>
+      
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="flex space-x-2 items-center p-6 border-t border-gray-200 rounded-b dark:border-gray-600">
+                        <button data-modal-toggle="student-contact-add-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600">Decline</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Student create modal ends-->
+
+
+<!-- Guardain add modal starts-->
+
+
+        <!-- Main modal -->
+        <div id="guarding-add-modal" aria-hidden="true" class="hidden overflow-x-hidden overflow-y-auto fixed h-modal md:h-full top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center">
+            <div class="relative w-full max-w-5xl px-4 h-full mt-4">
+                <!-- Modal content -->
+                <div class="bg-white rounded-lg shadow relative border-gray-600 border-2 dark:bg-gray-700 ">
+                    <!-- Modal header -->
+                    <div class="flex items-start justify-between p-5 border-b rounded-t dark:border-gray-600">
+                        <h3 class="text-gray-900 text-xl lg:text-2xl font-semibold dark:text-white">
+                            Add Guardian
+                        </h3>
+                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="guarding-add-modal">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="p-6 space-y-6 space-x-6">
+                        
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{guardian_create}}<br>
+                        <input type="submit" value="Add" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600">
+                    </form>
+      
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="flex space-x-2 items-center p-6 border-t border-gray-200 rounded-b dark:border-gray-600">
+                        <button data-modal-toggle="guarding-add-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600">Decline</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Guardian create modal ends-->
 
 {% endblock %}

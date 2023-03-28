@@ -55,6 +55,7 @@ class StudentContact(models.Model):
 
 
 class Guardian(Person):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='guardians')
     phone = PhoneNumberField()
     identity = models.ImageField(upload_to="guardian/identity", blank=True, null=True)
     relationship = models.CharField(max_length=500, null=True, blank=True)
