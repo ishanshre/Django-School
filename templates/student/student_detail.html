@@ -46,9 +46,17 @@
     {% for guardian in student.guardians.all %}
         
         <div class="bg-gray-200 p-4 rounded-xl mt-5">
-            <h1 class="text-2xl">Gurdians {{forloop.counter}}</h1>
+            <div class="flex justify-between">
+                <div>
+                    <h1 class="text-2xl">Gurdians {{forloop.counter}}</h1>
+                </div>
+                <div class="flex space-x-2">
+                    <a href="{% url 'student:guardian_update' guardian.id student.id %}"><button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Update</button></a>
+                    <a href="{% url 'student:guardian_delete' guardian.id student.id %}"><button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Delete</button></a>
+                </div>
+            </div>
             {% if guardian.picture %}
-            <img src="{{guardian.picture}}" alt="guardian pic">
+            <img src="{{guardian.picture.url}}" alt="guardian pic">
             {% endif %}
             <p><strong>First Name: </strong>{{guardian.first_name}}</p>
             {% if guardian.middle_name %}

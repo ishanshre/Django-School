@@ -143,3 +143,39 @@ class GuardianCreateForm(forms.ModelForm):
             'phone':PhoneNumberPrefixWidget(initial="NP"),
             'relationship':forms.Textarea(attrs={"placeholder":"Guardian relationship with student", "class": form_view})            
         }
+
+
+class GuardianUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Guardian
+        fields = [
+            'first_name',
+            'middle_name',
+            'last_name',
+            'picture',
+            'date_of_birth',
+            'gender',
+            'email',
+            'temporary_address',
+            'permanent_address',
+            'phone',
+            'identity',
+            'relationship'
+        ]
+        widgets = {
+            'first_name':forms.TextInput(attrs={"placeholder":"First Name", "class":form_view}),
+            'middle_name':forms.TextInput(attrs={"placeholder":"Middle Name", "class":form_view}),
+            'last_name':forms.TextInput(attrs={"placeholder":"Last Name", "class":form_view}),
+            'date_of_birth': DateInput(),
+            'email':forms.EmailInput(attrs={"placeholder":"Email Address", "class":form_view}),
+            'temporary_address':forms.TextInput(attrs={"placeholder":"Temporary Address", "class":form_view}),
+            'permanent_address':forms.TextInput(attrs={"placeholder":"Permanent Address", "class":form_view}),
+            'phone':PhoneNumberPrefixWidget(initial="NP"),
+            'relationship':forms.Textarea(attrs={"placeholder":"Guardian relationship with student", "class": form_view})            
+        }
+
+
+class GuardianDeleteForm(forms.Form):
+    guardian_delete = forms.BooleanField(initial=True, widget=forms.HiddenInput)
+
+        

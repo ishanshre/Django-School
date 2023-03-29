@@ -11,7 +11,7 @@ from django.contrib import messages
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from student.models import Student
+from student.models import Student, Guardian
 from student.form import (
     StudentCreateForm,
     StudentUpdateForm, 
@@ -19,6 +19,8 @@ from student.form import (
     GuardianCreateForm,
     StudentContactCreateForm,
     StudentContactDeleteForm,
+    GuardianUpdateForm,
+    GuardianDeleteForm,
 )
 # Create your views here.
 
@@ -60,7 +62,6 @@ class StudentDetailView(LoginRequiredMixin, View):
         student_delete = StudentDeleteForm()
         student_contact_add = StudentContactCreateForm()
         guardian_create = GuardianCreateForm()
-        
         context = {
             "student":student,
             "student_update": student_update,
@@ -116,3 +117,25 @@ class StudentDetailView(LoginRequiredMixin, View):
             "student_contact_add":student_contact_add,
         }
         return render(request, self.template_name, context)
+    
+
+class GuardianUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = Guardian
+    form_class = GuardianUpdateForm
+    template_name = "student/guardian_update.html"
+    success_message = "Updated Successfull"
+    context_object_name = "guardian"
+    
+    def get_success_url(self) -> str:
+        return reverse_lazy("student:student-detail", args=[self.kwargs['student_pk']])
+
+
+class GuardianDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+    model = Guardian
+    template_name = "student/guardian_delete.html"
+    context_object_name = "guardian"
+    success_message = "guardian deleted"
+    def get_success_url(self) -> str:
+        return reverse_lazy("student:student-detail", args=[self.kwargs['student_pk']])
+
+
